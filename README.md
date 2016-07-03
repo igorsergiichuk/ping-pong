@@ -1,3 +1,3 @@
 # ping-pong
 
-the simple desktop game created on Python (Tkinter)
+simple desktop game created on Python (Tkinter)
