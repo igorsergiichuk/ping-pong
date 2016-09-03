@@ -15,20 +15,20 @@ PHOTO_H2 = tk.PhotoImage(file="hearts2.gif")
 PHOTO_H1 = tk.PhotoImage(file="hearts.gif")
 PHOTO_H0 = tk.PhotoImage(file="hearts0.gif")
 PHOTO_LP = tk.PhotoImage(file="padleft.gif")
-PHOTO_LP = tk.PhotoImage(file="padright.gif")
+PHOTO_RP = tk.PhotoImage(file="padright.gif")
 WIDTH = 700  # Width of the canvas
 HEIGHT = 500  # Height of the canvas
 RAD = 20  # Ball's radius
 CIRCLE = [WIDTH / 2 - RAD, HEIGHT / 2 - RAD,
-         WIDTH / 2 + RAD, HEIGHT / 2 + RAD]
-         # The position of the circle on the canvas.
+         WIDTH / 2 + RAD, HEIGHT / 2 + RAD]  # The position of the circle on the canvas.
 
 
 PADS_H = 120  # The height of the pad
 PADS_W = 20  # The width of the pad
 PAD_VEL = 15  # Paddle velocity
 
-#Global values
+
+# Global values
 SPEEDS = [-1, 1, -1, 1]
 count = 0
 level = 0
@@ -40,8 +40,8 @@ levellab = tk.StringVar()
 
 # Describes canvas's parameters and objects on the canvas
 Surface = tk.Canvas(master=root, width=WIDTH, height=HEIGHT, borderwidth=0)
-Surface.pack(fill=tk.BOTH, expand = tk.YES) # the pack geometry is used
-Surface.create_image(350, 250, image=PHOTO_START, tag = "photostart")
+Surface.pack(fill=tk.BOTH, expand=tk.YES)  # the pack geometry is used
+Surface.create_image(350, 250, image=PHOTO_START, tag="photostart")
 
 
 def quits():
@@ -61,14 +61,14 @@ def new_game():
     x1 = 1*SPEEDS[1]*accel
     y2 = 1*SPEEDS[0]*accel
 
-    Surface.create_image(350, 250, image=PHOTO_TITL, tag= "phototitl")
-    Surface.create_oval(CIRCLE, tag = "ball", fill = "White", outline= "White")
-    Surface.create_rectangle([2, 2, PADS_W, PADS_H], tag = "padleft")
+    Surface.create_image(350, 250, image=PHOTO_TITL, tag="phototitl")
+    Surface.create_oval(CIRCLE, tag="ball", fill="White", outline="White")
+    Surface.create_rectangle([2, 2, PADS_W, PADS_H], tag="padleft")
     Surface.create_rectangle([WIDTH-PADS_W+2, 2, WIDTH, PADS_H],
-                            tag = "padright")
-    itemlp = Surface.create_image(10, 60, image = PHOTO_LP, tag = "itempl")
-    itemrp = Surface.create_image(692, 60, image = PHOTO_LP, tag = "itemrp")
-    labelh = tk.Label(master=root, image=PHOTO_H3, bg="black").place(x=485, y = 7)
+                            tag="padright")
+    itemlp = Surface.create_image(10, 60, image=PHOTO_LP, tag="itempl")
+    itemrp = Surface.create_image(692, 60, image=PHOTO_RP, tag="itemrp")
+    labelh = tk.Label(master=root, image=PHOTO_H3, bg="black").place(x=485, y=7)
     padcl = Surface.coords("padleft")
     padcr = Surface.coords("padright")
     ballco = Surface.coords("ball")
@@ -78,46 +78,46 @@ def new_game():
 
 
 def respawn():
-    '''Respawn the ball in the middle'''
+    # Respawn the ball in the middle
     global respawncounter
     Surface.delete("ball")
-    Surface.create_oval(CIRCLE, tag = "ball", fill = "White", outline= "White")
+    Surface.create_oval(CIRCLE, tag="ball", fill="White", outline="White")
 
     if respawncounter == 1:
         labelh = tk.Label(master=root, image=PHOTO_H2, bg="black")
-        labelh.place(x=485, y = 7)
+        labelh.place(x=485, y=7)
     elif respawncounter == 2:
         labelh = tk.Label(master=root, image=PHOTO_H1, bg="black")
-        labelh.place(x=485, y = 7)
+        labelh.place(x=485, y=7)
     elif respawncounter == 3:
         Surface.delete("ball")
         labelh = tk.Label(master=root, image=PHOTO_H0, bg="black")
-        labelh.place(x=485, y = 7)
-        Surface.create_image(350, 250, image=PHOTO_GO, tag = "game_over")
+        labelh.place(x=485, y=7)
+        Surface.create_image(350, 250, image=PHOTO_GO, tag="game_over")
     else:
         new_game()
 
 
 def drawcirc():
-    '''Ball mobility'''
+    # Ball mobility
     global x1, y2, count, respawncounter, padcl, padcr, ballco
     global accel, level, timerevent
     if 0 <= count <= 1:
-        accel = 2
+        accel = 0.08
         level = 0
-        Surface.move ("ball", x1*accel, y2*accel)
+        Surface.move("ball", x1*accel, y2*accel)
     if 2 <= count <= 4:
-        accel = 2.5
+        accel = 0.1
         level = 1
-        Surface.move ("ball", x1*accel, y2*accel)
+        Surface.move("ball", x1*accel, y2*accel)
     if 5 <= count <= 8:
-        accel = 3
+        accel = 0.2
         level = 2
-        Surface.move ("ball", x1*accel, y2*accel)
+        Surface.move("ball", x1*accel, y2*accel)
     if 8<= count <= 12:
-        accel = 4
+        accel = 0.28
         level = 3
-        Surface.move ("ball", x1*accel, y2*accel)
+        Surface.move("ball", x1*accel, y2*accel)
     if count >= 13:
         Surface.create_image(350, 250, image=PHOTO_WIN, tag="win")
 
@@ -188,17 +188,17 @@ def keypress4(Right):
 
 
 label_level = tk.Label(master=root, textvariable=levellab, bg="black",
-font=("Helvetica", 15), fg = "#EC3572")
-label_level.place(x=262, y = 7)
+                        font=("Helvetica", 15), fg="#EC3572")
+label_level.place(x=262, y=7)
 label_level2 = tk.Label(master=root, text="Level is",bg="black",
-font=("Helvetica", 15), fg = "#EC3572")
-label_level2.place(x=190, y = 7)
-button_1 = tk.Button(master = root, image=PHOTO_BUT2, command=new_game)
+                        font=("Helvetica", 15), fg="#EC3572")
+label_level2.place(x=190, y=7)
+button_1 = tk.Button(master=root, image=PHOTO_BUT2, command=new_game)
 button_1.place(x=268, y=500)
-button_2 = tk.Button(master = root, image=PHOTO_BUT1, command=quits)
+button_2 = tk.Button(master=root, image=PHOTO_BUT1, command=quits)
 button_2.place(x=613, y=517)
 
-frame = tk.Frame(master = root, width=0, height=61)
+frame = tk.Frame(master=root, width=0, height=61)
 frame.bind("<KeyPress-a>", keypress)
 frame.bind("<KeyPress-d>", keypress2)
 frame.bind("<KeyPress-Left>", keypress3)
@@ -207,4 +207,3 @@ frame.pack()
 frame.focus_set()
 
 root.mainloop()
-
